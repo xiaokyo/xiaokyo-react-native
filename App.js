@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler';
 import React from 'react'
-import { View } from 'react-native'
-import { StatusBar } from 'react-native'
+import StatusBar from '~/src/components/statusBar'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // stack pages
 import Login from './src/pages/login'
+import Register from './src/pages/register'
 
 // pages
 import Posts from './src/pages/posts'
@@ -19,10 +19,11 @@ const Drawer = createDrawerNavigator();
 export default props => {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ header: () => null }}>
+      <StatusBar />
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ header: () => null, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, }} >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
 
     </NavigationContainer>

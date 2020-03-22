@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import StatusBar from '~/src/components/statusBar'
 import LinearGradient from 'react-native-linear-gradient'
 import { Wrapper, Logo, TextInput, Hr, TouchableOpacity, LoginButton, SubmitImage, Footer, FootText, FootButton } from './styled'
 
 export default props => {
-
+  const { push, navigate } = useNavigation()
   const { params, handleChange, submit, error } = useLoginForm()
 
   return (
     <Wrapper>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Logo source={require('../../assets/logo.png')} />
+      <StatusBar />
+      <Logo source={require('~/src/assets/logo.png')} />
       <TextInput maxLength={20} keyboardType="email-address" value={params.username} placeholder='用户名/邮箱/手机号' onChangeText={value => handleChange({ key: 'username', value })} />
       <Hr />
       <TextInput maxLength={20} secureTextEntry={true} value={params.password} placeholder='密码' onChangeText={value => handleChange({ key: 'password', value })} />
@@ -19,7 +20,7 @@ export default props => {
       <TouchableOpacity activeOpacity={error ? 1 : 0.4} onPress={() => !error && submit()}>
         <LoginButton style={{ opacity: error ? 0.4 : 1 }}>
           <LinearGradient colors={["#ecccac", "#e3a86c"]} style={{ width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <SubmitImage source={require('./images/sign.png')} />
+            <SubmitImage source={require('~/src/assets/sign.png')} />
           </LinearGradient>
         </LoginButton>
       </TouchableOpacity>
@@ -29,7 +30,7 @@ export default props => {
           <FootText border>忘记密码</FootText>
         </FootButton>
 
-        <FootButton onPress={() => console.log('注册')}>
+        <FootButton onPress={() => console.log('注册')} onPress={() => navigate('Register')}>
           <FootText>没有账号？去注册</FootText>
         </FootButton>
       </Footer>
