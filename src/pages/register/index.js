@@ -92,7 +92,7 @@ const useRegisterForm = () => {
   }
 
   useEffect(() => {
-    return clearInterval(inter)
+    return () => clearInterval(inter)
   }, [])
 
   const handleChange = ({ key, value }) => {

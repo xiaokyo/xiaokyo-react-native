@@ -1,14 +1,18 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { cleanHtmlTag } from '~/src/utils'
+// import { Text } from 'react-native'
 
 // styled
-import { Card } from './styled'
+import { Card, Title, Description, User, Username } from './styled'
 
 export default ({ item, ...props }) => {
-  const { bank } = item
+  const { title, description, user: { username } } = item
   return (
     <Card>
-      <Text>{bank}</Text>
+      <Title>{title}</Title>
+      <Description>{cleanHtmlTag(description)}</Description>
+      <User><Username>{username}</Username></User>
+
     </Card>
   )
 }

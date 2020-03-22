@@ -20,7 +20,13 @@ export const Left = styled.View`
 `
 
 export const Title = styled.Text`
-  font-size:24px;
+  font-size:20px;
   flex:1;
   text-align:center;
+`
+
+export const Right = styled.View`
+  font-size:20px;
+  padding-left:20px;
+  min-width:50px;
 `
