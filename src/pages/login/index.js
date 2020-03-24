@@ -10,6 +10,10 @@ import storage from '~/src/utils/storage'
 
 import Loading from '~/src/components/loading'
 
+// actions
+import { useDispatch } from 'react-redux'
+import { saveUserInfo } from '~/src/redux/userInfo/actions'
+
 export default props => {
   const { push, navigate } = useNavigation()
   const { params, handleChange, submit, error, loginLoading } = useLoginForm({ navigate })
@@ -68,6 +72,7 @@ const TODO_LOGIN = gql`
 `
 
 const useLoginForm = ({ navigate }) => {
+  const dispatch = useDispatch()
   const [params, setParams] = useState({
     username: '',
     password: '',
@@ -105,7 +110,8 @@ const useLoginForm = ({ navigate }) => {
     const { accessToken, user } = res.data.login
     showToast('登录成功')
     storage.set('token', accessToken)
-    storage.set('userInfo', JSON.stringify(user))
+    storage.set('user', JSON.stringify(user))
+    saveUserInfo(res.data.login)(dispatch)
     navigate('Home')
   }
 

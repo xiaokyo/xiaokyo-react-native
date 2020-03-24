@@ -20,7 +20,7 @@ export const Left = styled.View`
 `
 
 export const Title = styled.Text`
-  font-size:20px;
+  font-size:16px;
   flex:1;
   text-align:center;
 `
@@ -29,4 +29,11 @@ export const Right = styled.View`
   font-size:20px;
   padding-left:20px;
   min-width:50px;
+`
+
+// 头像
+export const Avatar = styled.Image`
+  width:30px;
+  height:30px;
+  border-radius:50px;
 `

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { ToastAndroid } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import StatusBar from '~/src/components/statusBar'
+import gql from 'graphql-tag';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearGradient from 'react-native-linear-gradient'
 import { Wrapper, Title, TextInput, Hr, TouchableOpacity, LoginButton, SubmitImage, Footer, FootText, OpacityBtn, CodeView, CodeText, CodeInput } from './styled'
 
@@ -58,6 +60,28 @@ export default props => {
   )
 }
 
+const TODO_REGISTER = gql`
+  mutation AddUser($username:String!,$password:String!,$email:String!,$emailCode:String!){
+    addUser(
+      username:$username,
+      password:$password,
+      email:$email,
+      emailCode:$emailCode
+    ){
+      msg
+      success
+    }
+  }
+`
+
+const QUERY_SENDCODE = gql`
+  query SendEmailCode($email:String!){
+    sendEmailCode(email:$email){
+      success
+      msg
+    }
+  }
+`
 
 let inter = null
 const useRegisterForm = () => {

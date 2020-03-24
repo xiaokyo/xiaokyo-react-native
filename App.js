@@ -5,6 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+// redux
+import { Provider as ReduxProvider } from 'react-redux'
+import { store } from './src/redux'
+
 // graphql
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -29,16 +33,18 @@ const client = new ApolloClient({
 
 export default props => {
   return (
-    <ApolloProvider client={client}>
-      <NavigationContainer>
-        <StatusBar />
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ header: () => null, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, }} >
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ApolloProvider>
+    <ReduxProvider store={store}>
+      <ApolloProvider client={client}>
+        <NavigationContainer>
+          <StatusBar />
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ header: () => null, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, }} >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ApolloProvider>
+    </ReduxProvider>
   );
 }
 
