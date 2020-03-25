@@ -8,6 +8,8 @@ import Header from '~/src/components/header'
 import Card from './components/card'
 import Loading from '~/src/components/loading'
 
+import SmsListener from 'react-native-android-sms-listener'
+
 // styled
 import { Wrapper, FooterLoading, FooterLoadMore } from './styled'
 
@@ -32,6 +34,14 @@ export default props => {
   const [params, setParams] = useState({ limit: 10, skip: 0 })
   const { loading, error, data, refetch, fetchMore } = useQuery(GET_POSTS, { variables: { ...params } });
   const { refreshing, onReFresh, onEndReached } = useFetchPost({ params, setParams, refetch, fetchMore })
+
+  useEffect(() => {
+    console.log('SmsListener', SmsListener)
+    SmsListener.addListener(message => {
+      console.info(message)
+    })
+  }, [])
+
   // if (loading) return <Loading />;
   if (error) return <Loading />;
 

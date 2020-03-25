@@ -19,7 +19,7 @@ export default ({ title = 'Title', ...props }) => {
   //       // Failure code
   //     });
   // }
-  console.log('avatar', userInfo.user.avatar)
+  // console.log('avatar', userInfo.user.avatar)
 
   return (
     <Header>
