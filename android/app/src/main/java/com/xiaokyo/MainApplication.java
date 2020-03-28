@@ -12,7 +12,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.centaurwarchief.smslistener.SmsListenerPackage;
-import com.xiaokyo.MyTaskService;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -28,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
-          new SmsListenerPackage();
+          // new SmsListenerPackage();
+          // new ReactNativePushNotificationPackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
@@ -48,15 +49,6 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-
-    // Intent service = new Intent(getApplicationContext(), MyTaskService.class);
-    // Bundle bundle = new Bundle();
-
-    // bundle.putString("foo", "bar");
-    // service.putExtras(bundle);
-
-    // getApplicationContext().startService(service);
-
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
   }

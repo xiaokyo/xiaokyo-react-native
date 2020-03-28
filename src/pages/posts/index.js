@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList } from 'react-native'
+import React, {useState, useEffect} from 'react';
+import {FlatList} from 'react-native';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-import { debounce } from '~/src/utils'
+import {useQuery} from '@apollo/react-hooks';
+import {debounce} from '~/src/utils';
 // components
-import Header from '~/src/components/header'
-import Card from './components/card'
-import Loading from '~/src/components/loading'
+import Header from '~/src/components/header';
+import Card from './components/card';
+import Loading from '~/src/components/loading';
 
-import SmsListener from 'react-native-android-sms-listener'
+import SmsListener from 'react-native-android-sms-listener';
 
 // styled
-import { Wrapper, FooterLoading, FooterLoadMore } from './styled'
+import {Wrapper, FooterLoading, FooterLoadMore} from './styled';
 
 const GET_POSTS = gql`
-  query GetPosts($limit:Int,$skip:Int){
-    getPosts(limit:$limit,skip:$skip){
+  query GetPosts($limit: Int, $skip: Int) {
+    getPosts(limit: $limit, skip: $skip) {
       _id
       description
       title
       like_count
       comment_count
       createDate
-      user{
+      user {
         _id
         username
       }
@@ -31,19 +31,28 @@ const GET_POSTS = gql`
 `;
 
 export default props => {
-  const [params, setParams] = useState({ limit: 10, skip: 0 })
-  const { loading, error, data, refetch, fetchMore } = useQuery(GET_POSTS, { variables: { ...params } });
-  const { refreshing, onReFresh, onEndReached } = useFetchPost({ params, setParams, refetch, fetchMore })
+  const [params, setParams] = useState({limit: 10, skip: 0});
+  const {loading, error, data, refetch, fetchMore} = useQuery(GET_POSTS, {
+    variables: {...params},
+  });
+  const {refreshing, onReFresh, onEndReached} = useFetchPost({
+    params,
+    setParams,
+    refetch,
+    fetchMore,
+  });
 
   useEffect(() => {
-    console.log('SmsListener', SmsListener)
+    console.log('SmsListener', SmsListener);
     SmsListener.addListener(message => {
-      console.info(message)
-    })
-  }, [])
+      console.info(message);
+    });
+  }, []);
 
   // if (loading) return <Loading />;
-  if (error) return <Loading />;
+  if (error) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -51,8 +60,8 @@ export default props => {
       <Wrapper>
         <FlatList
           horizontal={false}
-          data={data && data.getPosts || []}
-          renderItem={({ item }) => <Card item={item} />}
+          data={(data && data.getPosts) || []}
+          renderItem={({item}) => <Card item={item} />}
           keyExtractor={item => item._id}
           refreshing={refreshing}
           onRefresh={onReFresh}
@@ -62,48 +71,56 @@ export default props => {
         />
       </Wrapper>
     </>
-  )
-}
+  );
+};
 
-let page = 0
-const useFetchPost = ({ params, setParams, refetch, fetchMore }) => {
-  const [refreshing, setRefreshing] = useState(false)
+let page = 0;
+const useFetchPost = ({params, setParams, refetch, fetchMore}) => {
+  const [refreshing, setRefreshing] = useState(false);
   // const [loadMore, setLoadMore] = useState(true)
 
   const onReFresh = async () => {
-    page = 0
-    setParams({ limit: 10, skip: 0 })
-    setRefreshing(true)
-    await refetch()
-    setRefreshing(false)
-  }
+    page = 0;
+    setParams({limit: 10, skip: 0});
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   const onEndReached = async () => {
-    page += 1
+    page += 1;
     await fetchMore({
       variables: {
-        skip: page
+        skip: page,
       },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
-        if (!prev) return prev || []
-        return { ...prev, getPosts: [...prev.getPosts, ...fetchMoreResult.getPosts] }
-      }
-    })
-  }
+      updateQuery: (prev, {fetchMoreResult}) => {
+        if (!fetchMoreResult) {
+          return prev;
+        }
+        if (!prev) {
+          return prev || [];
+        }
+        return {
+          ...prev,
+          getPosts: [...prev.getPosts, ...fetchMoreResult.getPosts],
+        };
+      },
+    });
+  };
 
-  return { refreshing, onReFresh, onEndReached }
-}
+  return {refreshing, onReFresh, onEndReached};
+};
 
-const FooterComponent = ({ loading = false, loadMore = true }) => {
+const FooterComponent = ({loading = false, loadMore = true}) => {
   return (
     <FooterLoading>
-      {
-        loading ?
-          <Loading />
-          :
-          <FooterLoadMore>{loadMore ? '上拉加载更多~汪' : '已经没有了哦~汪'}</FooterLoadMore>
-      }
+      {loading ? (
+        <Loading />
+      ) : (
+        <FooterLoadMore>
+          {loadMore ? '上拉加载更多~汪' : '已经没有了哦~汪'}
+        </FooterLoadMore>
+      )}
     </FooterLoading>
-  )
-}
+  );
+};

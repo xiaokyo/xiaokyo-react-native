@@ -1,11 +1,16 @@
 /**
  * @format
  */
-import { AppRegistry } from 'react-native';
+import {AppRegistry} from 'react-native';
 import App from './App';
-import { name as appName } from './app.json';
-import './permissionAuth'
+import {name as appName} from './app.json';
+import './permissionAuth';
+import Notification from './notification';
 
-AppRegistry.registerHeadlessTask('SomeTaskName', () => require('~/SomeTaskName'))
+const notification = new Notification();
+
+setTimeout(() => {
+  notification.newScheduleNotification();
+}, 5000);
 
 AppRegistry.registerComponent(appName, () => App);
