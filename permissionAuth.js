@@ -15,7 +15,7 @@ async function requestReadSmsPermission() {
 }
 requestReadSmsPermission();
 
-console.log('SmsListener', SmsListener);
+// console.log('SmsListener', SmsListener);
 const smsSubscription = SmsListener.addListener(message => {
   console.log(message);
 });

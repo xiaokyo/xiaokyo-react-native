@@ -144,13 +144,13 @@ const useLoginForm = ({navigate}) => {
     if (loginLoading) {
       return;
     }
-    console.log(params);
+    // console.log(params);
     const {username: email, password} = params;
     const [err, res] = await to(login({variables: {email, password}}));
     if (err) {
       return showToast('服务器错误');
     }
-    console.log('登录返回', res);
+    
     if (res.data.login.code === 0) {
       return showToast('用户名密码错误');
     }

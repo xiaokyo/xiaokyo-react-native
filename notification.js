@@ -3,11 +3,11 @@ import PushNotification from 'react-native-push-notification';
 class Notification {
   constructor() {
     PushNotification.configure({
-      onRegister: function(token) {
-        console.log('TOKEN:', token);
+      onRegister: function (token) {
+        // console.log('TOKEN:', token);
       },
-      onNotification: function(notification) {
-        console.log('NOTIFICATION:', notification);
+      onNotification: function (notification) {
+        // console.log('NOTIFICATION:', notification);
         // notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
       senderID: 'YOUR GCM (OR FCM) SENDER ID',
@@ -29,11 +29,12 @@ class Notification {
     });
   };
 
-  newScheduleNotification = () => {
+  newScheduleNotification = ({ title, message }) => {
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      message: 'My Notification Message', // (required)
-      date: new Date(Date.now() + 5 * 1000), // in 60 secs
+      title,
+      message, // (required)
+      date: new Date(Date.now() + 1 * 1000), // in 60 secs
     });
   };
 }

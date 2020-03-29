@@ -1,87 +1,60 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.xiaokyo">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-
-    <!-- SMS -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-
-    <!-- 指纹权限 -->
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-
-    <application
-      android:name=".MainApplication"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
-      android:theme="@style/AppTheme">
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-
-      <receiver
-        android:name="com.google.android.gms.gcm.GcmReceiver"
-        android:exported="true"
-        android:permission="com.google.android.c2dm.permission.SEND" >
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <category android:name="${applicationId}" />
-        </intent-filter>
-      </receiver>
-      
-      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
-      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
-        </intent-filter>
-      </receiver>
-
-      <receiver android:name=".NetworkChangeReceiver" >
-        <intent-filter>
-            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-        </intent-filter>
-      </receiver>
-
-      <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-
-      <service
-        android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-        android:exported="false" >
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        </intent-filter>
-      </service>
-
-
-        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
-                    android:value="Example-Channel"/>
-        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description"
-                    android:value="Super channel description"/>
-        <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
-                    android:resource="@android:color/white"/>
-
-    </application>
-
-    <!-- < Only if you're using GCM or localNotificationSchedule() > -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-    <!-- < Only if you're using GCM or localNotificationSchedule() > -->
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.xiaokyo">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	<!-- SMS -->
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.READ_SMS" />
+	<!-- 指纹权限 -->
+	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+  <!-- 网络状态 -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  
+	<application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
+		<activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+		<receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<category android:name="${applicationId}" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
+		<receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+		<!-- myTask -->
+		<service android:name=".MyTaskService" />
+		<!-- network has change sdk 24 deprecate-->
+		<!-- <receiver android:name=".NetworkChangeReceiver">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+			</intent-filter>
+		</receiver> -->
+		<service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService" />
+		<service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService" android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+			</intent-filter>
+		</service>
+		<meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_name" android:value="Example-Channel" />
+		<meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_description" android:value="Super channel description" />
+		<meta-data android:name="com.dieam.reactnativepushnotification.notification_color" android:resource="@android:color/white" />
+	</application>
+	<!-- < Only if you're using GCM or localNotificationSchedule() > -->
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+	<!-- < Only if you're using GCM or localNotificationSchedule() > -->
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>

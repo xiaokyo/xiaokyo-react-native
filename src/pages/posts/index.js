@@ -8,8 +8,6 @@ import Header from '~/src/components/header';
 import Card from './components/card';
 import Loading from '~/src/components/loading';
 
-import SmsListener from 'react-native-android-sms-listener';
-
 // styled
 import {Wrapper, FooterLoading, FooterLoadMore} from './styled';
 
@@ -41,13 +39,6 @@ export default props => {
     refetch,
     fetchMore,
   });
-
-  useEffect(() => {
-    console.log('SmsListener', SmsListener);
-    SmsListener.addListener(message => {
-      console.info(message);
-    });
-  }, []);
 
   // if (loading) return <Loading />;
   if (error) {

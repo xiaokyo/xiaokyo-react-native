@@ -8,7 +8,7 @@ import { Header, Left, Right, Title, Avatar } from './styled'
 export default ({ title = 'Title', ...props }) => {
   const { toggleDrawer, navigate } = useNavigation()
   const { userInfo } = useSelector(state => state)
-  console.log('userInfo', userInfo)
+  // console.log('userInfo', userInfo)
   // const authTouchId = () => {
   //   TouchID.authenticate('指纹验证后登录账号', {title:'验证指纹'})
   //     .then(success => {
